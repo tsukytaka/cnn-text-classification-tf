@@ -22,6 +22,21 @@ def clean_str(string):
     string = re.sub(r"\s{2,}", " ", string)
     return string.strip().lower()
 
+def load_data(data_files):
+	x_text = []
+	labels = []
+	y = {}
+	for i in range(len(data_files)):
+		examples = list(open("data/" + data_files[i], "r", encoding='utf-8').readline())
+		x_text += ([s.strip() for s in examples])
+		vector_label = [0]*len(data_files)
+		vector_label[i] = 1
+		labels.append([vector_label for _ in examples])
+	y = np.concatenate(labels, 0)
+	print("y = ", y)
+	print("x_text = ", x_text)
+	return [x_text, y]	
+		
 
 def load_data_and_labels(positive_data_file, negative_data_file):
     """
